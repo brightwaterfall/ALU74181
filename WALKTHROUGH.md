@@ -9,7 +9,20 @@ git clone https://github.com/gddwms/ALU74181.git
 cd ALU74181
 ```
 
-## 2. Simulate (cocotb + Icarus)
+## 2. Simulate
+
+### Offline golden model (no Icarus required)
+
+From `test/`:
+
+```bash
+pip install pytest
+pytest test_golden_unit.py -q
+```
+
+This exhaustively checks the Python reference model that mirrors `src/alu74181.v`.
+
+### Full RTL cocotb (Icarus)
 
 Requirements: Python 3.11+, `iverilog`, `pip`.
 
@@ -21,7 +34,7 @@ make
 # Pass when results.xml has no failure/error entries
 ```
 
-On Windows, use WSL or the repo `.devcontainer` for the same commands.
+On Windows without Icarus, use WSL, the repo `.devcontainer`, or rely on GitHub Actions `test` workflow after you push.
 
 ## 3. Project metadata
 
