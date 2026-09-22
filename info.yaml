@@ -8,7 +8,7 @@ project:
   clock_hz:     0
 
   tiles: "1x1"
-  top_module:  "tt_um_gddwms_alu74181"
+  top_module:  "tt_um_brightwaterfall_alu74181"
 
   source_files:
     - "alu74181.v"

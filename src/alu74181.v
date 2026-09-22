@@ -1,9 +1,12 @@
 /*
- * Copyright (c) 2026 gddwms
+ * Copyright (c) 2026 brightwaterfall / gddwms
  * SPDX-License-Identifier: Apache-2.0
  *
  * SN74xx181-compatible 4-bit ALU (active-high A/B/F).
  * Cn_n is active-low carry-in (TTL pin name Cn).
+ *
+ * Arithmetic uses explicit 5-bit widths to avoid Verilator WIDTHEXPAND
+ * and to make unsigned wrap-around for "-1" rows well-defined.
  */
 
 `default_nettype none
@@ -22,7 +25,9 @@ module alu74181 (
 );
 
   // cin=1 when TTL Cn is asserted (low)
-  wire cin = ~Cn_n;
+  wire       cin  = ~Cn_n;
+  wire [4:0] cin5 = {4'b0, cin};
+  wire [4:0] one  = 5'd1;
 
   wire [3:0] A_and_B  = A & B;
   wire [3:0] A_and_nB = A & ~B;
@@ -41,46 +46,45 @@ module alu74181 (
       case (S)
         4'b0000: F = ~A;
         4'b0001: F = ~(A | B);
-        4'b0010: F = ~A & B;
+        4'b0010: F = (~A) & B;
         4'b0011: F = 4'b0000;
         4'b0100: F = ~(A & B);
         4'b0101: F = ~B;
         4'b0110: F = A ^ B;
         4'b0111: F = A & ~B;
-        4'b1000: F = ~A | B;
+        4'b1000: F = (~A) | B;
         4'b1001: F = ~(A ^ B);
         4'b1010: F = B;
         4'b1011: F = A & B;
         4'b1100: F = 4'b1111;
         4'b1101: F = A | ~B;
         4'b1110: F = A | B;
-        default: F = A;
+        default: F = A; // 4'b1111
       endcase
       Cn4_n = 1'b1;
     end else begin
       // Arithmetic mode (M=0)
-      // cin=0 => Cn high column; cin=1 => Cn low column
+      // All sums are 5-bit so F=arith[3:0], cout=arith[4] (Cn4_n=~cout)
       case (S)
-        4'b0000: arith = {1'b0, A} + cin;
-        4'b0001: arith = {1'b0, A_or_B} + cin;
-        4'b0010: arith = {1'b0, A_or_nB} + cin;
-        4'b0011: arith = 5'h0f + cin;
-        4'b0100: arith = {1'b0, A} + {1'b0, A_and_nB} + cin;
-        4'b0101: arith = {1'b0, A_or_B} + {1'b0, A_and_nB} + cin;
+        4'b0000: arith = {1'b0, A} + cin5;
+        4'b0001: arith = {1'b0, A_or_B} + cin5;
+        4'b0010: arith = {1'b0, A_or_nB} + cin5;
+        4'b0011: arith = 5'h0f + cin5;
+        4'b0100: arith = {1'b0, A} + {1'b0, A_and_nB} + cin5;
+        4'b0101: arith = {1'b0, A_or_B} + {1'b0, A_and_nB} + cin5;
         // A-B-1 / A-B  == A + ~B + cin
-        4'b0110: arith = {1'b0, A} + {1'b0, ~B} + cin;
-        // (A&~B)-1 / (A&~B) == (A&~B) + cin - 1
-        4'b0111: arith = {1'b0, A_and_nB} + cin - 5'd1;
-        4'b1000: arith = {1'b0, A} + {1'b0, A_and_B} + cin;
-        4'b1001: arith = {1'b0, A} + {1'b0, B} + cin;
-        4'b1010: arith = {1'b0, A_or_nB} + {1'b0, A_and_B} + cin;
-        // (A&B)-1 / (A&B)
-        4'b1011: arith = {1'b0, A_and_B} + cin - 5'd1;
-        4'b1100: arith = {1'b0, A} + {1'b0, A} + cin;
-        4'b1101: arith = {1'b0, A_or_B} + {1'b0, A} + cin;
-        4'b1110: arith = {1'b0, A_or_nB} + {1'b0, A} + cin;
+        4'b0110: arith = {1'b0, A} + {1'b0, ~B} + cin5;
+        // (A&~B)-1 / (A&~B) == (A&~B) + cin - 1  (5-bit wrap)
+        4'b0111: arith = {1'b0, A_and_nB} + cin5 - one;
+        4'b1000: arith = {1'b0, A} + {1'b0, A_and_B} + cin5;
+        4'b1001: arith = {1'b0, A} + {1'b0, B} + cin5;
+        4'b1010: arith = {1'b0, A_or_nB} + {1'b0, A_and_B} + cin5;
+        4'b1011: arith = {1'b0, A_and_B} + cin5 - one;
+        4'b1100: arith = {1'b0, A} + {1'b0, A} + cin5;
+        4'b1101: arith = {1'b0, A_or_B} + {1'b0, A} + cin5;
+        4'b1110: arith = {1'b0, A_or_nB} + {1'b0, A} + cin5;
         // A-1 / A
-        default: arith = {1'b0, A} + cin - 5'd1;
+        default: arith = {1'b0, A} + cin5 - one;
       endcase
       F     = arith[3:0];
       Cn4_n = ~arith[4];
@@ -89,7 +93,7 @@ module alu74181 (
 
   assign AeqB = &F;
 
-  // Carry look-ahead P/G (active-low), classic style from A/B/S
+  // Carry look-ahead P/G (active-low). Useful for cascading demos.
   wire [3:0] p = ~(({4{S[1]}} & ~B) | ({4{S[0]}} & B) | A);
   wire [3:0] g = ~(({4{S[3]}} & B) | ({4{S[2]}} & ~B) | A);
 

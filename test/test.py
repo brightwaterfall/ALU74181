@@ -80,3 +80,15 @@ async def test_identity_and_zero(dut):
     await apply(dut, 0xA, 0x5, s=0b0011, m=1, cn_n=1)
     f, *_ = unpack_uo(int(dut.uo_out.value))
     assert f == 0x0
+
+
+@cocotb.test()
+async def test_ena_gates_outputs(dut):
+    """When ena=0, wrapper forces uo_out low (safe idle)."""
+    dut.rst_n.value = 1
+    dut.ena.value = 1
+    await apply(dut, 0xF, 0x0, s=0b1111, m=1, cn_n=1)
+    assert int(dut.uo_out.value) & 0xF == 0xF
+    dut.ena.value = 0
+    await Timer(1, unit="ns")
+    assert int(dut.uo_out.value) == 0

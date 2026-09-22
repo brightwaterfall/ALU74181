@@ -33,7 +33,7 @@ Digital Verilog **74181-style 4-bit ALU** for Tiny Tapeout (SKY130 / LibreLane).
 | `uo_out[6]` | G_n |
 | `uo_out[7]` | Cn4_n |
 
-Top module: `tt_um_gddwms_alu74181`
+Top module: `tt_um_brightwaterfall_alu74181`
 
 ## Quick test
 
