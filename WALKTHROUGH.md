@@ -81,4 +81,4 @@ Attach or download GDS artifacts from the successful `gds` workflow run into the
 
 ## PCB test board
 
-PCB bring-up is a separate deliverable (KiCad + Gerbers) once the breakout / LED / switch behavior is specified.
+See [`pcb/`](pcb/). Behavior: with A/B/M/Cn fixed, a 555 + 74HC161 **cycles S0–S3 through 0…15** so every ALU function runs one after another; LEDs display F.

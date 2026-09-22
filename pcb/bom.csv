@@ -1,0 +1,13 @@
+Comment,Designator,Footprint,Quantity,JLCPCB / notes
+3V3 from TT demo board,J_TT,Header 2.54mm,1,See connections.csv
+NE555 timer,U1,SOIC-8 or DIP-8,1,ICM7555 OK at 3.3V
+74HC161 binary counter,U2,SOIC-16 or DIP-16,1,74HC161
+100k potentiometer,RV1,9mm pot,1,Rate
+10k resistor,R1 R2 R_PD*,0603,12+,Pull-downs + 555
+330 resistor,R_LED*,0603,5,LED series
+10uF capacitor,C1 C_BULK,0805,2,Electrolytic or ceramic
+100nF capacitor,C2 C_DEC*,0603,3,Bypass
+LED red 0805,LED0-3 LED_AEQ,0805,5,F and AeqB
+DIP switch 4-pos,SW_A SW_B,DIP-4,2,A and B
+SPDT switch,SW_M SW_CN HOLD,SMD or PTH,3,M Cn_n freeze
+Header 1x16 or dual row,J_TT,PTH 2.54,1,To TT board

@@ -1,0 +1,27 @@
+PCB_net,TT_signal,TT_pin_name,Direction,Notes
+A0,A0,ui[0],PCB->chip,DIP SW_A bit0
+A1,A1,ui[1],PCB->chip,DIP SW_A bit1
+A2,A2,ui[2],PCB->chip,DIP SW_A bit2
+A3,A3,ui[3],PCB->chip,DIP SW_A bit3
+B0,B0,ui[4],PCB->chip,DIP SW_B bit0
+B1,B1,ui[5],PCB->chip,DIP SW_B bit1
+B2,B2,ui[6],PCB->chip,DIP SW_B bit2
+B3,B3,ui[7],PCB->chip,DIP SW_B bit3
+S0,S0,uio[0],PCB->chip,74HC161 Q0 (auto sequence)
+S1,S1,uio[1],PCB->chip,74HC161 Q1
+S2,S2,uio[2],PCB->chip,74HC161 Q2
+S3,S3,uio[3],PCB->chip,74HC161 Q3
+M,M,uio[4],PCB->chip,SW_M
+Cn_n,Cn_n,uio[5],PCB->chip,SW_CN active-low carry
+GND_tie,,uio[6],PCB->chip,Tie GND
+GND_tie,,uio[7],PCB->chip,Tie GND
+F0,F0,uo[0],chip->PCB,LED0
+F1,F1,uo[1],chip->PCB,LED1
+F2,F2,uo[2],chip->PCB,LED2
+F3,F3,uo[3],chip->PCB,LED3
+AeqB,AeqB,uo[4],chip->PCB,LED_AEQ
+P_n,P_n,uo[5],chip->PCB,Test point optional
+G_n,G_n,uo[6],chip->PCB,Test point optional
+Cn4_n,Cn4_n,uo[7],chip->PCB,Test point optional
+3V3,3V3,3V3,power,From demo board
+GND,GND,GND,power,Common ground

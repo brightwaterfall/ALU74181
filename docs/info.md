@@ -34,5 +34,5 @@ Automated checks: from `test/`, run `make` (cocotb + Icarus).
 
 ## External hardware
 
-- Tiny Tapeout demo board or breakout with access to `ui` / `uo` / `uio` headers.
-- Optional DIP switches for `A`, `B`, `S`, `M`, `Cn_n` and LEDs on `F` / flags (PCB TBD).
+- Tiny Tapeout demo board (host for the ASIC tile)
+- **74181 ALU test PCB** (`pcb/`): 555 + 74HC161 auto-sequences **S0–S3** through all 16 functions; DIP switches set A/B/M/Cn_n; LEDs show F and AeqB. See `pcb/README.md` and `pcb/BRINGUP.md`.

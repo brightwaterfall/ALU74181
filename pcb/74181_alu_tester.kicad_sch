@@ -1,0 +1,30 @@
+(kicad_sch
+  (version 20231120)
+  (generator "eeschema")
+  (generator_version "8.0")
+  (uuid "e2b1c0a0-7418-4a11-9f00-000000000001")
+  (paper "A4")
+  (title_block
+    (title "74181 ALU test PCB — auto S0-S3 sequencer")
+    (date "2026-09-22")
+    (rev "1")
+    (company "gddwms / Tiny Tapeout")
+    (comment 1 "555 + 74HC161 cycles S through all 16 ALU functions")
+    (comment 2 "See SCHEMATIC.md and BRINGUP.md for full wiring")
+  )
+  (text "FUNCTION\n\n1) 555 astable (RV1 = rate) clocks 74HC161\n2) Q0..Q3 drive S0..S3 into TT uio[3:0]\n3) Sequence: S=0,1,2,...15,0,... (one function after another)\n4) DIP A/B + SW M/Cn_n hold operands/mode\n5) LEDs show F[3:0] and AeqB from uo_*\n\nPower: 3V3/GND from Tiny Tapeout demo board.\nComplete netlist: SCHEMATIC.md + connections.csv + bom.csv\nPlace symbols (NE555, 74HC161, DIP, headers, LEDs) from KiCad\nstandard libraries, then route a 2-layer board ~50x50mm."
+    (exclude_from_sim no)
+    (at 30 40 0)
+    (effects (font (size 1.5 1.5)) (justify left top))
+    (uuid "a1000000-0000-4000-8000-000000000001")
+  )
+  (text "BLOCKS\n\n[U1 NE555] --CLK--> [U2 74HC161] --S[3:0]--> J_TT uio[0:3]\n[SW_A/B/M/Cn] -------------------> J_TT ui_* / uio[4:5]\nJ_TT uo[3:0], uo[4] -------------> LED F0-F3, AeqB"
+    (exclude_from_sim no)
+    (at 30 120 0)
+    (effects (font (size 1.5 1.5)) (justify left top))
+    (uuid "a1000000-0000-4000-8000-000000000002")
+  )
+  (sheet_instances
+    (path "/" (page "1"))
+  )
+)
