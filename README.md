@@ -2,10 +2,21 @@
 
 # Tiny Tapeout — 74181 4-bit ALU
 
-Digital Verilog implementation of a classic **74181-style 4-bit ALU** for Tiny Tapeout (SKY130 / LibreLane flow).
+Digital Verilog **74181-style 4-bit ALU** for Tiny Tapeout (SKY130 / LibreLane).
+
+**Repo:** https://github.com/brightwaterfall/ALU74181
 
 - [Project documentation](docs/info.md)
 - [Reproduce the flow](WALKTHROUGH.md)
+- [Test PCB (auto S0–S3)](pcb/README.md)
+
+## Status
+
+| Check | Result |
+|-------|--------|
+| RTL cocotb (`test`) | Passing on GitHub Actions |
+| GDS harden + precheck + GL test | Passing |
+| Tagged release with GDS | See [Releases](https://github.com/brightwaterfall/ALU74181/releases) |
 
 ## Pin map
 
@@ -22,7 +33,9 @@ Digital Verilog implementation of a classic **74181-style 4-bit ALU** for Tiny T
 | `uo_out[6]` | G_n |
 | `uo_out[7]` | Cn4_n |
 
-## Quick test (local)
+Top module: `tt_um_gddwms_alu74181`
+
+## Quick test
 
 ```bash
 cd test

@@ -1,7 +1,7 @@
 # Tiny Tapeout project information
 project:
   title:        "74181 4-bit ALU"
-  author:       "gddwms"
+  author:       "brightwaterfall"
   discord:      ""
   description:  "Classic 74181 4-bit ALU (logic + arithmetic) for Tiny Tapeout"
   language:     "Verilog"

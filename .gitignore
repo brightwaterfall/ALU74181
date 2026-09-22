@@ -13,4 +13,6 @@ test/results.xml
 test/gate_level_netlist.v
 
 test/.pytest_cache/
+release_artifacts/
+*.zip
 
