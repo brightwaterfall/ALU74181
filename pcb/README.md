@@ -4,30 +4,34 @@ Auto-exerciser for the Tiny Tapeout **74181 ALU** chip.
 
 ## What it does
 
-With **A**, **B**, **M**, and **Cn_n** held on switches:
+With **A**, **B**, **M**, and **Cn_n** on switches:
 
-1. A slow **555** clock advances a **74HC161** counter  
-2. **Q0–Q3 → S0–S3**  
-3. S runs **0 → 1 → … → 15 → 0…** (every ALU function, one after another)  
+1. **555** clocks a **74HC161**
+2. **Q0–Q3 → S0–S3**
+3. S runs **0→1→…→15→0…** (every function, one after another)
 4. LEDs show **F[3:0]** and **AeqB**
 
-## Deliverables
+## Fabrication (Gerbers ready)
 
 | File | Purpose |
 |------|---------|
-| [BRINGUP.md](BRINGUP.md) | Power-on / how to watch the sequence |
-| [SCHEMATIC.md](SCHEMATIC.md) | Full net / wiring description |
-| [schematic_sequencer.svg](schematic_sequencer.svg) | Block schematic drawing |
-| [bom.csv](bom.csv) | Parts + typical LCSC codes |
-| [connections.csv](connections.csv) | Header ↔ TT pin map |
-| `74181_alu_tester.kicad_pro` / `.kicad_sch` | KiCad project entry |
-| [generate_schematic_svg.py](generate_schematic_svg.py) | Regenerate SVG |
+| **[74181_alu_tester_gerbers.zip](74181_alu_tester_gerbers.zip)** | Upload to JLCPCB / PCBWay |
+| [gerbers/](gerbers/) | Unpacked Gerber + Excellon |
+| [generate_gerbers.py](generate_gerbers.py) | Regenerate Gerbers (`python generate_gerbers.py`) |
 
-## Fab
+**Board:** 70×50 mm · 2-layer · 1.6 mm · HASL · min track 0.25 mm
 
-1. Open KiCad project and place symbols from `SCHEMATIC.md` (555, 74HC161, DIP, headers, LEDs).  
-2. Route 2-layer ~50×50 mm, 3V3 from TT demo board.  
-3. Export Gerbers + CPL from KiCad for JLCPCB.  
-4. Assemble using `bom.csv`.
+## Design docs
 
-No MCU — discrete sequencer only.
+| File | Purpose |
+|------|---------|
+| [BRINGUP.md](BRINGUP.md) | Power-on / usage |
+| [SCHEMATIC.md](SCHEMATIC.md) | Net / wiring |
+| [schematic_sequencer.svg](schematic_sequencer.svg) | Block schematic |
+| [bom.csv](bom.csv) | BOM + LCSC hints |
+| [connections.csv](connections.csv) | Header ↔ TT pins |
+| `74181_alu_tester.kicad_pro` / `.kicad_sch` / `.kicad_pcb` | KiCad project (outline + docs) |
+
+## Viewer (chip layout)
+
+GitHub Pages + TT viewer: https://brightwaterfall.github.io/ALU74181/
