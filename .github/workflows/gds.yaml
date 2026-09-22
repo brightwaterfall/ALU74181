@@ -9,22 +9,13 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           submodules: recursive
 
-      - name: Read top module name
-        id: top_module
-        run: |
-          echo TOP_MODULE=`yq '.project.top_module' info.yaml` | tee $GITHUB_OUTPUT
-
-      - name: Create and publish the GDS artifact
-        uses: TinyTapeout/tt-gds-action/custom_gds@ttsky26d
+      - name: Build GDS
+        uses: TinyTapeout/tt-gds-action@ttsky26d
         with:
-          top_module: ${{ steps.top_module.outputs.TOP_MODULE }}
-          gds_path: gds/${{ steps.top_module.outputs.TOP_MODULE }}.gds
-          lef_path: lef/${{ steps.top_module.outputs.TOP_MODULE }}.lef
-          verilog_path: src/project.v
           pdk: sky130A
 
   precheck:
@@ -33,6 +24,18 @@ jobs:
     steps:
       - name: Run Tiny Tapeout Precheck
         uses: TinyTapeout/tt-gds-action/precheck@ttsky26d
+
+  gl_test:
+    needs: gds
+    runs-on: ubuntu-24.04
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v6
+        with:
+          submodules: recursive
+
+      - name: GL test
+        uses: TinyTapeout/tt-gds-action/gl_test@ttsky26d
 
   viewer:
     needs: gds
