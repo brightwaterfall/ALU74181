@@ -16,3 +16,6 @@ test/.pytest_cache/
 release_artifacts/
 *.zip
 
+
+!pcb/74181_alu_tester_gerbers.zip
+
