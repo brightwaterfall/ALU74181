@@ -12,8 +12,8 @@
     (date "2026-09-22")
     (rev "1")
     (company "brightwaterfall")
-    (comment 1 "70x50mm 2-layer — Gerbers in gerbers/ and 74181_alu_tester_gerbers.zip")
-    (comment 2 "Regenerate: python generate_gerbers.py")
+    (comment 1 "70x50mm 2-layer — see pcb_render.png and 74181_alu_tester_gerbers.zip")
+    (comment 2 "Regenerate: py -3 generate_board.py")
   )
   (layers
     (0 "F.Cu" signal)
@@ -89,7 +89,7 @@
     (layer "Edge.Cuts")
     (uuid "b1000000-0000-4000-8000-000000000001")
   )
-  (gr_text "74181 ALU tester 70x50mm\nUpload 74181_alu_tester_gerbers.zip to JLCPCB"
+  (gr_text "74181 ALU tester 70x50mm\nPreview: pcb_render.png\nFab: 74181_alu_tester_gerbers.zip\nBuild: py -3 generate_board.py"
     (at 35 25)
     (layer "Cmts.User")
     (uuid "b1000000-0000-4000-8000-000000000002")
